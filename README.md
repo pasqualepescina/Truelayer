@@ -13,5 +13,6 @@ Steps:
 6. Create a CSV file from XML file only with the fields that are from our interest, namely Title, Abstract, and URL
 7. Create a dataframe from Csv file 
 8.  Created a key from   title field to be able to join two dataframes, removing the spaces and turning all the characters to lowercase in the title field.
-9.  Created connector with POSTGRESQL database using psycopg2 and sql alchemy for pushing the final dataframe (df movies joined with df_wiki) to my POSTGRESQL instance.
+9. In some cases,for some  the revenue generated is equal to 0, making the ratio value infinite. I did not considered these cases becasuse it does not provide a insighful information about the movie's performance, which I think is one of the main goal of the assignment
+10.  Created connector with POSTGRESQL database using psycopg2 and sql alchemy for pushing the final dataframe (df movies joined with df_wiki) to my POSTGRESQL instance.
 10.  Then queried my newly created table to make sure that it was populated

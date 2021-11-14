@@ -1,4 +1,5 @@
-
+import numpy as np
+from numpy import e
 import psycopg2
 from datetime import datetime
 import sys, pandas as pd
@@ -65,22 +66,26 @@ if __name__ == '__main__':
         film=""
         tree = ET.parse(path_wiki)
         root = tree.getroot()
-        for x in root.iter("doc"):
-            if 'film' in str(x[3][0][0].text) or 'Film' in str(x[3][0][0].text):
-                title = str(x[0].text).split(":")[1]
-                abstract = str(x[2].text)
-                if x[3][0][1]:
-                    link = str(x[3][0][1].text)
-                else:
-                    link = ""
-                film = film + title + "~" + abstract + "~" + link +"\n"
-                fname  =r"csvfile.csv"
-                with open(fname,"w", encoding="utf-8") as file:
-                    writer = csv.writer(file)
-                    file.write(film)
+        try:
+            for x in root.iter("doc"):
+                if 'film' in str(x[3][0][0].text) or 'Film' in str(x[3][0][0].text):
+                    title = str(x[0].text).split(":")[1]
+                    abstract = str(x[2].text)
+                    if x[3][0][1]:
+                        link = str(x[3][0][1].text)
+                    else:
+                        link = ""
+                    film = film + title + "~" + abstract + "~" + link +"\n"
+                    fname  =r"csvfile.csv"
+                    with open(fname,"w", encoding="utf-8") as file:
+                        writer = csv.writer(file)
+                        file.write(film)
+
+        except Exception as e:
+            print ("Errot: ",e)
+            pass
         path_csv =sys.path[0]+"\csvfile.csv"
-        print("Successfully parsed and created CSV file {}".format(fname))
-        
+        print("Successfully parsed and created CSV file {}".format(fname))  
 
         print(date, "Creating dataframe from parsed XML file ")
         df_wiki = pd.read_csv(path_csv,low_memory= False,sep="~")
@@ -90,6 +95,7 @@ if __name__ == '__main__':
         df_final = df_movies.merge(df_wiki, on='key', how='left')
 
         df_final = df_final.sort_values(by='ratio', ascending=False)
+        df_final.replace(np.inf 0, inplace=True)
         df_final = df_final.head(1000)
         df_final['budget'].astype(int)
         df_final.to_csv('df_final.csv',sep="~")
