@@ -95,7 +95,7 @@ if __name__ == '__main__':
         df_final = df_movies.merge(df_wiki, on='key', how='left')
 
         df_final = df_final.sort_values(by='ratio', ascending=False)
-        df_final.replace(np.inf 0, inplace=True)
+        df_final.replace(np.inf,0, inplace=True)
         df_final = df_final.head(1000)
         df_final['budget'].astype(int)
         df_final.to_csv('df_final.csv',sep="~")
