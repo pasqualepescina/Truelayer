@@ -16,8 +16,8 @@ if __name__ == '__main__':
     try:
         # paths to files
         print(date, "Getting path files...")
-        path_wiki = sys.path[0]+"\datasets\enwiki-latest-abstract.xml"
-        path_metadata = sys.path[0]+"\datasets\movies_metadata.csv"
+        path_wiki = "path to xml file""
+        path_metadata = " path to movies_metadata.csv"
         print(date, "Correctly got {} and {} path files".format(path_wiki, path_metadata))
 
         #Creating Pandas Dataframe for movies
